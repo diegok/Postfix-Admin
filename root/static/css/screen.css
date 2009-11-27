@@ -1,0 +1,194 @@
+body {
+    margin:0;
+    padding:0;
+    background:#49535B;
+    color:#fff;
+    font-family: Helvetica;
+    font-size:11px;
+}
+
+div,h1,h2,h3,h4,h5,h6,p,ul,li,input {
+    margin:0;
+    padding:0;
+}
+
+li {
+    list-style:none;
+}
+
+div#header {
+    background: #DCDCBF;
+}
+
+div#header > div {
+    width:980px;
+    margin: 0 auto;
+    padding:10px;
+    height:14px;
+}
+
+div#header h1 a {
+    color:#49535B;
+    background:#fff;
+    padding: 10px 8px 6px 8px;
+    position:absolute;
+    top:0;
+    border: 2px solid #ccc;
+    border-top:0;
+    -moz-border-radius-bottomleft:4px;
+    -moz-border-radius-bottomright:4px;
+    text-decoration:none;
+}
+
+div#subheader {
+    background: #D7D7BB;
+    color:#49535B;
+}
+
+div#subheader > div {
+    width:960px;
+    margin: 0 auto;
+    padding:12px 0 6px 10px; 
+    min-height:18px;
+}
+
+div#subheader li {
+    display:inline-block;
+    border-right:1px solid #bbb;
+}
+
+div#subheader li.last {
+    border:0;
+}
+
+div#subheader li > a {
+    display:block;
+    text-decoration:none;
+    color:#666;
+    font-size:1.1em;
+    font-weight:bold;
+    padding:4px 10px;
+}
+
+div#subheader li > a:hover,
+div#subheader li > a.active {
+    text-decoration:underline;
+}
+
+div#content {
+    width:960px;
+    margin: 0 auto;
+}
+
+div#content > h2 {
+    font-size: 1.9em;
+    margin-top: 15px;
+    font-weight:normal;
+}
+
+div#footer {
+    width:980px
+    margin: 15px auto;
+}
+
+div.box {
+    background:white;
+    color:#666;
+    -moz-border-radius:6px;
+    margin-top: 15px;
+}
+
+div.box > h2 {
+    background: #363E44; 
+    color: #eee;
+    padding: 10px;
+    -moz-border-radius-topleft:6px;
+    -moz-border-radius-topright:6px;
+    font-size:1.3em;
+    font-weight:normal;
+}
+
+div.box > h3 {
+    background: #DEDEC1; 
+    color: #555;
+    padding: 8px 15px 7px;
+    font-size:1em;
+    border-bottom:1px solid #ccc;
+}
+
+div.box span.name {
+    display:inline-block;
+    width:160px;
+}
+
+div.box span.desc {
+    display:inline-block;
+    width:320px;
+}
+
+div.box span.who {
+    display:inline-block;
+    width:280px;
+}
+
+div.box span.action {
+    display:inline-block;
+    width:480px;
+}
+
+div.box span.alias,
+div.box span.mbox,
+div.box span.quota,
+div.box span.last_mod,
+div.box span.date,
+div.box span.time,
+div.box span.active {
+    display:inline-block;
+    width:80px;
+    text-align:center;
+}
+
+div.box > ul > li {
+    padding: 8px 15px;
+    border-bottom:1px solid #eee;
+    clear:both;
+}
+
+div.box input {
+    margin-right: 10px;
+}
+
+div.box > p {
+    padding:12px 15px;
+    text-align:right;
+}
+
+div.pager a,
+div.box > p > a {
+    text-decoration:none;
+    color: #444;
+    font-size:1em;
+    padding:2px 5px;
+}
+
+div.pager a:hover,
+div.box > p > a:hover {
+    text-decoration:underline;
+}
+
+div.pager a.active,
+div.box > p > a.active {
+    background:#eee;
+}
+
+div.pager {
+    padding:12px 0;
+    text-align:center;
+}
+
+div.app_error {
+    padding:12px 10px;
+    text-align:center;
+}
+
+

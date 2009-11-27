@@ -1,0 +1,24 @@
+[% html.title          = 'Logs' -%]
+[% html.menu.logs      = 1 -%]
+<h2>Action log</h2>
+<div class="box domains">
+    <h2>Logs</h2>
+    <h3>
+        <span class="who">Who</span>
+        <span class="action">Description</span>
+        <span class="date">Date</span>
+        <span class="time">Time</span>
+    </h3>
+    <ul>
+[% FOREACH log IN logs -%]
+        <li>
+            <span class="who">[% log.username %]</span>
+            <span class="action">[% log.action _ ' ' _ log.data | ucfirst %]</span>
+            <span class="date">[% log.timestamp.dmy('/') %]</span>
+            <span class="time">[% log.timestamp.hms(':') %]</span>
+        </li>
+[% END -%]
+    </ul>
+    [% PROCESS element/pager.tt -%]
+</div>
+

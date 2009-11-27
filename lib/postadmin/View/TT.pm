@@ -6,7 +6,14 @@ use warnings;
 use base 'Catalyst::View::TT';
 
 __PACKAGE__->config(
-    TEMPLATE_EXTENSION => '.tt'
+    CATALYST_VAR => 'c',
+    TEMPLATE_EXTENSION => '.tt',
+    INCLUDE_PATH => [
+        postadmin->path_to( 'root', 'src' ),
+        postadmin->path_to( 'root', 'wrapper' )
+    ],
+    WRAPPER      => 'selector',
+    TIMER        => 0
 );
 
 =head1 NAME

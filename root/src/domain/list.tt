@@ -1,0 +1,37 @@
+[% html.title           = 'Domain list' -%]
+[% html.js.list_actions = 1 -%]
+[% html.menu.domains    = 1 -%]
+<h2>Domain list</h2>
+<div class="box domains">
+    <h2>Domains</h2>
+    <h3>
+        <input type="checkbox" class="toggle" id="domain_name" />
+        <span class="name">Name</span>
+        <span class="desc">Description</span>
+        <span class="alias">Aliases</span>
+        <span class="mbox">Mailboxes</span>
+        <span class="quota">Quota</span>
+        <span class="last_mod">Modified</span>
+        <span class="active">Active</span>
+    </h3>
+    <ul>
+[% FOREACH domain IN domains -%]
+        <li>
+            <input type="checkbox" name="domain_name" value="[% domain.domain %]" />
+            <span class="name">[% domain.domain %]</span>
+            <span class="desc">[% domain.description %]</span>
+            <span class="alias">[% domain.aliases || 'unlimited' %]</span>
+            <span class="mbox">[% domain.mailboxes || 'unlimited' %]</span>
+            <span class="quota">[% domain.maxquota || 'unlimited' %]</span>
+            <span class="last_mod">[% domain.modified.dmy('/') %]</span>
+            <span class="active">[% IF domain.active %]yes[% ELSE %]no[% END %]</span>
+        </li>
+[% END -%]
+    </ul>
+    <p> 
+        <a href="[% c.uri_for('toggle') %]" class="action multi">Toggle active</a>
+        <a href="[% c.uri_for('edit') %]" class="action single">Edit</a>
+        <a href="[% c.uri_for('delete') %]" class="action multi">Delete</a>
+    </p>
+</div>
+

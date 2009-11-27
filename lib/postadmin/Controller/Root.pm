@@ -29,7 +29,7 @@ This app is a drop-in replacement for php postfix admin interface
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 
-    $c->response->body( 'Nothing yet' );
+    $c->res->redirect( $c->uri_for( '/domain' ) );
 }
 
 sub default :Path {
@@ -38,13 +38,34 @@ sub default :Path {
     $c->response->status(404);
 }
 
+=head2 auto
+
+Actions for all requests
+
+=cut
+sub auto : Private {
+    my ( $self, $c ) = @_;
+
+    if ( my $feedback = $c->flash->{feedback} ) {
+        $c->stash( feedback => $feedback );
+    }
+
+    1;
+}
+
 =head2 end
 
 Attempt to render a view, if needed.
 
 =cut
 
-sub end : ActionClass('RenderView') {}
+sub end : ActionClass('RenderView') {
+    my ( $self, $c ) = @_;
+
+    if ( my $feedback = $c->stash->{feedback} ) {
+        $c->flash( feedback => $feedback );
+    }
+}
 
 =head1 AUTHOR
 

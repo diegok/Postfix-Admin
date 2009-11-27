@@ -3,6 +3,8 @@
  <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>[% html.title || 'Title missing' %] - Postfix Admin</title>
+  <link href="/static/css/screen.css" rel="stylesheet" type="text/css" />
+[% PROCESS 'javascript' -%]
  </head>
  <body>
 [% content %]

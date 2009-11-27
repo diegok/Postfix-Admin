@@ -1,0 +1,9 @@
+[% FOREACH level IN feedback.keys -%]
+<div class="box feedback [% level %]">
+    <ul>
+    [% FOREACH message IN feedback.$level %]
+        <li>[% message %]</li>
+    [% END -%]
+    </ul>
+</div>
+[% END -%]

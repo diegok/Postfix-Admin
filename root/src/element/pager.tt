@@ -1,0 +1,31 @@
+[% IF pager.last_page && ( pager.last_page > 1 ) -%]
+<div class="pager">
+  [% IF pager.previous_page -%]
+    <a href="[% c.req.uri_with( page => pager.previous_page ) %]">Prev</a>
+  [% END -%]
+  [% page_number = 1 -%]
+  [% WHILE (page_number <= pager.last_page) -%]
+    [% IF page_number == pager.current_page -%]
+    <a href="[% c.request.uri_with( page => page_number ) %]" class="active">[% page_number %]</a>
+    [% ELSE -%]
+    <a href="[% c.req.uri_with( page => page_number ) %]">[% page_number %]</a>
+    [% END %]
+    [% page_number = page_number + 1 -%]
+    [% IF pager.last_page > 10 -%]
+        [% IF (pager.current_page > 8) and ( page_number == 3 ) and ( pager.last_page - pager.current_page < 8) -%]
+        [% page_number = pager.last_page - 8 -%]
+    <span class="break">...</span>
+        [% ELSIF (pager.current_page > 8) and ( page_number == 3 ) -%]
+        [% page_number = pager.current_page - 3 -%]
+    <span class="break">...</span>
+        [% ELSIF ( page_number >= pager.current_page + 4 ) and ( page_number > 8 ) and ( pager.last_page > page_number + 3 ) -%]
+        [% page_number = pager.last_page - 1 -%]
+        <span class="break">...</span>
+        [% END -%]
+    [% END -%]
+  [% END -%]
+  [% IF pager.next_page -%]
+    <a href="[% c.req.uri_with( page => pager.next_page ) %]">Next</a>
+  [% END -%]
+</div>
+[% END -%]

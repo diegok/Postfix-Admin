@@ -4,35 +4,45 @@ use strict;
 use warnings;
 
 use Catalyst::Runtime 5.80;
-
-# Set flags and add plugins for the application
-#
-#         -Debug: activates the debug mode for very useful log messages
-#   ConfigLoader: will load the configuration from a Config::General file in the
-#                 application's home directory
-# Static::Simple: will serve static files from the application's root
-#                 directory
-
 use parent qw/Catalyst/;
-use Catalyst qw/-Debug
-                ConfigLoader
-                Static::Simple/;
+use Catalyst qw/
+    ConfigLoader
+    Static::Simple
+
+    Session
+    Session::Store::FastMmap
+    Session::State::Cookie
+/;
+
 our $VERSION = '0.01';
 
-# Configure the application.
-#
-# Note that settings in postadmin.conf (or other external
-# configuration file that you set up manually) take precedence
-# over this when using ConfigLoader. Thus configuration
-# details given here can function as a default configuration,
-# with an external configuration file acting as an override for
-# local deployment.
-
 __PACKAGE__->config( name => 'postadmin' );
+
+# TODO: set defaults
 
 # Start the application
 __PACKAGE__->setup();
 
+=head1 add_feedback
+
+Manage user feedback structure
+
+Log to developer in debug mode!
+
+=cut
+sub add_feedback {
+    my ( $c, $type, $message ) = @_;
+
+    unless ( defined $type && defined $message ) {
+        warn 'Bad usage of add_feedback()';
+        return 0;
+    }
+
+    push @{ $c->stash->{feedback}{$type} }, $message;
+    $c->log->debug( $type . ': ' . $message ) if $c->debug;
+
+    return 1;
+}
 
 =head1 NAME
 

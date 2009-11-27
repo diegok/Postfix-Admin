@@ -1,7 +1,15 @@
 <div id="header">
+    <div>
 [% PROCESS header -%]
+    </div>
+</div>
+<div id="subheader">
+    <div>
+[% PROCESS submenu -%]
+    </div>
 </div>
 <div id="content">
+[% PROCESS element/feedback.tt -%]
 [% content -%]
 </div>
 <div id="footer">

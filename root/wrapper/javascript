@@ -1,0 +1,4 @@
+    <script src="[% c.uri_for('/static/js/jquery.js') %]" type="text/javascript" language="javascript"></script>
+[% IF html.js.list_actions -%]
+    <script src="[% c.uri_for('/static/js/jquery.pa.list_actions.js') %]" type="text/javascript" language="javascript"></script>
+[% END -%]

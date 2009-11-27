@@ -1,4 +1,5 @@
 [% html.title = 'Uncontrolled error' -%]
-<div class="app_error">
-<h2> App error! </h2>
+<h2> Application error  </h2>
+<div class="box app_error">
+    <p>Uncontrolled error</p>
 </div>
