@@ -7,4 +7,3 @@ BEGIN { use_ok 'postadmin::Controller::Domain' }
 
 ok( request('/domain')->is_success, 'Request should succeed' );
 
-

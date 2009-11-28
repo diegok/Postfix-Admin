@@ -57,7 +57,7 @@ sub element_chain : PathPart( 'domain' ) Chained( '/' ) CaptureArgs( 1 ) {
 Edit a domain
 
 =cut
-sub edit : PathPart( 'delete' ) Chained( 'user_chained' ) Args( 0 ) {
+sub edit : PathPart( 'delete' ) Chained( 'element_chain' ) Args( 0 ) {
     my ( $self, $c ) = @_;
 
     $c->res->body( 'Not implemented yet' );
@@ -68,7 +68,7 @@ sub edit : PathPart( 'delete' ) Chained( 'user_chained' ) Args( 0 ) {
 Delete a domain
 
 =cut
-sub delete : PathPart( 'delete' ) Chained( 'user_chained' ) Args( 0 ) {
+sub delete : PathPart( 'delete' ) Chained( 'element_chain' ) Args( 0 ) {
     my ( $self, $c ) = @_;
 
     $c->res->body( 'Not implemented yet' );

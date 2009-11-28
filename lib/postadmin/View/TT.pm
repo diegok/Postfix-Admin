@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use base 'Catalyst::View::TT';
+use postadmin;
 
 __PACKAGE__->config(
     CATALYST_VAR => 'c',
