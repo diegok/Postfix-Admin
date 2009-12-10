@@ -13,9 +13,9 @@ __PACKAGE__->add_columns(
   "description",
   { data_type => "VARCHAR", default_value => "", is_nullable => 0, size => 255 },
   "aliases",
-  { data_type => "INT", default_value => 0, is_nullable => 0, size => 10 },
+  { data_type => "INT", default_value => 0, is_nullable => 0, size => 10, accessor => 'max_aliases' },
   "mailboxes",
-  { data_type => "INT", default_value => 0, is_nullable => 0, size => 10 },
+  { data_type => "INT", default_value => 0, is_nullable => 0, size => 10, accessor => 'max_mailboxes' },
   "maxquota",
   { data_type => "INT", default_value => 0, is_nullable => 0, size => 10 },
   "transport",
@@ -50,6 +50,7 @@ __PACKAGE__->set_primary_key("domain");
 # Created by DBIx::Class::Schema::Loader v0.04006 @ 2009-11-20 14:13:27
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:9I4wr2hwInIfaCze3mBeDA
 
+__PACKAGE__->has_many( mailboxes => 'postadmin::Schema::Result::Mailbox' => 'domain' );
+__PACKAGE__->has_many( aliases   => 'postadmin::Schema::Result::Alias'   => 'domain' );
 
-# You can replace this text with custom content, and it will be preserved on regeneration
 1;

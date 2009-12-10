@@ -20,8 +20,8 @@
             <input type="checkbox" name="domain_name" value="[% domain.domain %]" />
             <span class="name">[% domain.domain %]</span>
             <span class="desc">[% domain.description %]</span>
-            <span class="alias">[% domain.aliases || 'unlimited' %]</span>
-            <span class="mbox">[% domain.mailboxes || 'unlimited' %]</span>
+            <span class="alias">[% domain.max_aliases || 'unlimited' %]</span>
+            <span class="mbox">[% domain.max_mailboxes || 'unlimited' %]</span>
             <span class="quota">[% domain.maxquota || 'unlimited' %]</span>
             <span class="last_mod">[% domain.modified.dmy('/') %]</span>
             <span class="active">[% IF domain.active %]yes[% ELSE %]no[% END %]</span>
@@ -29,9 +29,8 @@
 [% END -%]
     </ul>
     <p> 
-        <a href="[% c.uri_for('toggle') %]" class="action multi">Toggle active</a>
-        <a href="[% c.uri_for('edit') %]" class="action single">Edit</a>
-        <a href="[% c.uri_for('delete') %]" class="action multi">Delete</a>
+        <a href="[% c.uri_for('toggle') %]" class="domain_name_action any">Toggle active</a>
+        <a href="[% c.uri_for('edit') %]" class="domain_name_action single">Edit</a>
+        <a href="[% c.uri_for('delete') %]" class="domain_name_action any">Delete</a>
     </p>
 </div>
-
