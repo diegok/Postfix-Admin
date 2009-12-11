@@ -20,10 +20,10 @@ $().ready(function() {
                     else { inactive++ }
                 });
                 if ( active && !inactive ) { cb.trigger('AllActive') }
-                if ( active == 1 )    { cb.trigger('SingleActive') }
+                if ( active == 1 )         { cb.trigger('SingleActive') }
                 else if ( active > 1  )    { cb.trigger('MultiActive', [ active ]) }
-                if ( !active )        { cb.trigger('NoneActive') }
-                if ( inactive )       { cb.trigger('ExistInactive', [ inactive ]) }
+                else if ( !active )        { cb.trigger('NoneActive') }
+                if ( inactive )            { cb.trigger('ExistInactive', [ inactive ]) }
             });
         });
 
@@ -34,7 +34,10 @@ $().ready(function() {
         // setup link actions related to the list
         $('a.' + name + '_action' ).each(function() {
             var action = $(this);
-            action.click(function(){ cb.trigger('ExecAction', [ action ]); return false });
+            action.click(function(){ 
+                cb.trigger('ExecAction', [ action ]); 
+                return false; 
+            });
 
             if ( action.hasClass('single') ) {
                 cb.bind('MultiActive',  function() { deactivate( action ) });
@@ -50,6 +53,22 @@ $().ready(function() {
             }
 
             cb.bind('NoneActive',  function() { deactivate( action ) });
+        });
+
+        cb.bind('ExecAction',  function( ev, action ) { 
+            var url    = action.attr('href');
+            var fields = $('input[name=' + name + ']:checked');
+            var value_field = /_value_/;
+
+            if ( value_field.test(url) && fields.length == 1 ) {
+                window.location = url.replace( value_field, fields.get(0).value );
+            }
+            else {
+                //fields.wrapAll('<form action="' + url + '" id="' + name +'_form"/>');
+                //$('#' + name + '_form').submit();
+
+                window.location = url + '?' + fields.serialize();
+            }
         });
 
         // hack: trigger a change to setup the from the fill in fields

@@ -30,7 +30,7 @@
     </ul>
     <p> 
         <a href="[% c.uri_for('toggle') %]" class="domain_name_action any">Toggle active</a>
-        <a href="[% c.uri_for('edit') %]" class="domain_name_action single">Edit</a>
+        <a href="[% c.uri_for('_value_/edit') %]" class="domain_name_action single">Edit</a>
         <a href="[% c.uri_for('delete') %]" class="domain_name_action any">Delete</a>
     </p>
 </div>
