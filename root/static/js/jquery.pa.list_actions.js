@@ -64,9 +64,6 @@ $().ready(function() {
                 window.location = url.replace( value_field, fields.get(0).value );
             }
             else {
-                //fields.wrapAll('<form action="' + url + '" id="' + name +'_form"/>');
-                //$('#' + name + '_form').submit();
-
                 window.location = url + '?' + fields.serialize();
             }
         });
