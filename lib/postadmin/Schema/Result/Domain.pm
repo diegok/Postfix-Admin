@@ -53,4 +53,7 @@ __PACKAGE__->set_primary_key("domain");
 __PACKAGE__->has_many( mailboxes => 'postadmin::Schema::Result::Mailbox' => 'domain' );
 __PACKAGE__->has_many( aliases   => 'postadmin::Schema::Result::Alias'   => 'domain' );
 
+sub activate   { $_[0]->active(1); $_[0]->update(); };
+sub deactivate { $_[0]->active(0); $_[0]->update(); };
+
 1;

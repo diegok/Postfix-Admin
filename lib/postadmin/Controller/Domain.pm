@@ -16,11 +16,11 @@ Catalyst Controller.
 
 =cut
 
-
 =head2 index
 
-=cut
+    List domains on controller root
 
+=cut
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 
@@ -57,7 +57,7 @@ sub element_chain : PathPart( 'domain' ) Chained( '/' ) CaptureArgs( 1 ) {
 Edit a domain
 
 =cut
-sub edit : PathPart( 'delete' ) Chained( 'element_chain' ) Args( 0 ) {
+sub edit : PathPart( 'edit' ) Chained( 'element_chain' ) Args( 0 ) {
     my ( $self, $c ) = @_;
 
     $c->res->body( 'Not implemented yet' );
@@ -70,8 +70,16 @@ Delete a domain
 =cut
 sub delete : PathPart( 'delete' ) Chained( 'element_chain' ) Args( 0 ) {
     my ( $self, $c ) = @_;
+    my $domain = $c->stash->{domain};
 
-    $c->res->body( 'Not implemented yet' );
+    eval { $domain->delete };
+    if ($@) {
+        $c->add_feedback( info  => 'Domain ' . $domain->domain . ' can\'t be deleted' );
+        $c->add_feedback( error => $@ );
+    }
+    else {
+        $c->add_feedback( info => 'Domain ' . $domain->domain . ' has been deleted' );
+    }
 }
 
 =head1 togle_active
@@ -84,15 +92,49 @@ sub toggle_active : PathPart( 'toggle' ) Chained( 'element_chain' ) Args( 0 ) {
     my $domain = $c->stash->{domain};
 
     if ( $domain->active ) {
-        $domain->active(0);
+        $domain->deactivate;
         $c->add_feedback( info => 'Domain ' . $domain->domain . ' has been deactivated' );
     }
     else {
-        $domain->active(1);
+        $domain->activate;
         $c->add_feedback( info => 'Domain ' . $domain->domain . ' has been activated' );
     }
 
-    $domain->update;
+    $c->res->redirect( $c->uri_for('/domain') );
+}
+
+=head2 default
+
+    Try to exec allowed multi-domain actions on the requested action.
+
+    When no actions catch the request, this action will try to exec
+    the action mapped from $allow_multi on the domain_name's param 
+    received.
+
+=cut
+our $allow_multi = {
+    toggle => 'toggle_active',
+    delete => 'delete',
+};
+
+sub default :Path {
+    my ( $self, $c ) = @_;
+    my $action = ( split '/', $c->req->path )[1];
+
+    if ( exists $allow_multi->{$action} ) {
+        for my $domain_name ( $c->req->param('domain_name') ) {
+            if ( $c->stash->{domain} = $c->model('Postfix::Domain')->find( $domain_name ) ) {
+                $c->forward( $allow_multi->{$action} );
+            }
+            else {
+                $c->add_feedback( error => "Can't find domain '$domain_name'." );
+            }
+        }
+    }
+    else {
+        $c->add_feedback( error => "Action '$action' is not defined." );
+    }
+
     $c->res->redirect( $c->uri_for('/domain') );
 }
 
