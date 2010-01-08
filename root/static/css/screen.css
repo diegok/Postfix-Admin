@@ -186,6 +186,10 @@ div.box > p > a:hover {
     text-decoration:underline;
 }
 
+div.box > p > a.inactive {
+   cursor: not-allowed; 
+}
+
 div.pager a.active,
 div.box > p > a.active {
     background:#eee;

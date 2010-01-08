@@ -63,12 +63,12 @@ $().ready(function() {
             if ( value_field.test(url) && fields.length == 1 ) {
                 window.location = url.replace( value_field, fields.get(0).value );
             }
-            else {
+            else if ( !value_field.test(url) && fields.length >= 1 ) {
                 window.location = url + '?' + fields.serialize();
             }
         });
 
-        // hack: trigger a change to setup the from the fill in fields
+        // hack: trigger a change to setup the active links for the fill in fields
         $('input[name=' + name + ']:last').trigger('change');
     });
 
