@@ -61,7 +61,7 @@ sub edit : PathPart( 'edit' ) Chained( 'element_chain' ) Args( 0 ) {
     my ( $self, $c ) = @_;
     my $domain = $c->stash->{domain};
 
-    $c->res->body( 'Edit action for ' . $domain->domain . 'not implemented yet' );
+    $c->res->body( 'Edit action for ' . $domain->domain . ' not implemented yet' );
 }
 
 =head1 delete
