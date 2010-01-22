@@ -1,7 +1,7 @@
 [% html.title          = 'Logs' -%]
 [% html.menu.logs      = 1 -%]
 <h2>Action log</h2>
-<div class="box domains">
+<div class="box logs">
     <h2>Logs</h2>
     <h3>
         <span class="who">Who</span>
