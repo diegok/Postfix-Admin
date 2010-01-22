@@ -25,6 +25,14 @@ $().ready(function() {
                 else if ( !active )        { cb.trigger('NoneActive') }
                 if ( inactive )            { cb.trigger('ExistInactive', [ inactive ]) }
             });
+
+            // toggle clicking the li element
+            item.parent('li').click(function (ev) {
+                if ( $(ev.target).attr('type') == 'checkbox' ) return;
+                if ( item.attr('checked') ) { item.attr( 'checked', false ) }
+                else                        { item.attr( 'checked', true ) }
+                item.trigger('change');
+            });
         });
 
         // bind some default list functionality
@@ -80,4 +88,12 @@ $().ready(function() {
         element.addClass('inactive');
         element.fadeTo('fast', 0.33);
     }
+
+    // setup feedback closing
+    $('div.feedback').click(function () {
+        $(this).slideUp('normal', function () {
+            $(this).remove();
+        });
+    });
+
 });

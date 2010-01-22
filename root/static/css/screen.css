@@ -205,4 +205,10 @@ div.app_error {
     text-align:center;
 }
 
+div.feedback > ul {
+    padding:5px;
+}
 
+div.domains > ul > li:hover {
+    background:#ccc;
+}
