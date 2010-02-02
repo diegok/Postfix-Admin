@@ -3,13 +3,6 @@ package postadmin::Controller::Domain;
 use Moose; BEGIN { extends 'Catalyst::Controller' }
 use postadmin::Form::Domain;
 
-has 'form' => (
-    isa     => 'postadmin::Form::Domain',
-    is      => 'rw',
-    lazy    => 1,
-    default => sub { postadmin::Form::Domain->new }
-);
-
 =head1 NAME
 
 postadmin::Controller::Domain - Catalyst Controller
@@ -66,28 +59,30 @@ Edit a domain
 sub edit : PathPart( 'edit' ) Chained( 'element_chain' ) Args( 0 ) {
     my ( $self, $c ) = @_;
     my $domain = $c->stash->{domain};
+    my $form = postadmin::Form::Domain->new;
 
-    if ( $self->form->process( item => $domain, params => $c->req->params ) ) {
+    if ( $form->process( item => $domain, params => $c->req->params ) ) {
         $c->res->body( 'Edit action on ' . $domain->domain . ' saved' );
     }
     else {
         $c->stash( 
             template => 'domain/edit.tt', 
-            form     => $self->form
+            form     => $form
         );
     }
 }
 
 sub create : Path(create) Args(0) {
     my ( $self, $c ) = @_;
+    my $form = postadmin::Form::Domain->new;
 
-    if ( $self->form->process( schema => $c->model('Postfix'), params => $c->req->params ) ) {
+    if ( $form->process( schema => $c->model('Postfix'), params => $c->req->params ) ) {
         $c->res->body( 'domain created?' );
     }
     else {
         $c->stash( 
-            template => 'domain/edit.tt', 
-            form     => $self->form
+            template => 'domain/create.tt', 
+            form     => $form
         );
     }
 }
