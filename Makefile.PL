@@ -6,13 +6,16 @@ use inc::Module::Install;
 name 'postadmin';
 all_from 'lib/postadmin.pm';
 
-requires 'Catalyst::Runtime' => '5.80013';
+requires 'Catalyst::Runtime' => '5.80018';
 requires 'Catalyst::Plugin::ConfigLoader';
 requires 'Catalyst::Plugin::Static::Simple';
 requires 'Catalyst::Action::RenderView';
 requires 'parent';
 requires 'Config::General'; # This should reflect the config file format you've chosen
                  # See Catalyst::Plugin::ConfigLoader for supported formats
+requires 'HTML::FormHandler';
+requires 'HTML::FormHandler::Model::DBIC';
+
 catalyst;
 
 install_script glob('script/*.pl');
