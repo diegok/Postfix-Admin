@@ -5,7 +5,7 @@ use warnings;
 
 use base 'DBIx::Class';
 
-__PACKAGE__->load_components("InflateColumn::DateTime", "Core");
+__PACKAGE__->load_components("TimeStamp", "InflateColumn::DateTime", "Core");
 __PACKAGE__->table("vacation");
 __PACKAGE__->add_columns(
   "email",
@@ -31,7 +31,7 @@ __PACKAGE__->add_columns(
   "created",
   {
     data_type => "DATETIME",
-    default_value => "0000-00-00 00:00:00",
+    set_on_create => 1,
     is_nullable => 0,
     size => 19,
   },

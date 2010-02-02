@@ -13,6 +13,9 @@ requires 'Catalyst::Action::RenderView';
 requires 'parent';
 requires 'Config::General'; # This should reflect the config file format you've chosen
                  # See Catalyst::Plugin::ConfigLoader for supported formats
+
+requires 'DBIx::Class';
+requires 'DBIx::Class::TimeStamp';
 requires 'HTML::FormHandler';
 requires 'HTML::FormHandler::Model::DBIC';
 
