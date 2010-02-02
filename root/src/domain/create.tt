@@ -1,0 +1,6 @@
+[% html.title           = 'Create new domain' -%]
+[% html.menu.domains    = 1 -%]
+<div class="box">
+    <h2>Create new domain</h2>
+    [% form.render %]
+</div>
