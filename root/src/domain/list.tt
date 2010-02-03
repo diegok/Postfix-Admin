@@ -3,7 +3,7 @@
 [% html.menu.domains    = 1 -%]
 <h2>Domain list</h2>
 <div class="box domains">
-    <h2>Domains</h2>
+    <h2>Domains <a href="[% c.uri_for( 'create' ) %]" class="create" title="Add domain">+</a></h2>
     <h3>
         <input type="checkbox" class="toggle" id="domain_name" />
         <span class="name">Name</span>

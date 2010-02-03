@@ -118,6 +118,22 @@ div.box > h2 {
     font-weight:normal;
 }
 
+div.box > h2 > a.create {
+    float:right;
+    background:#777;
+    border:1px solid #444;
+    color:#222;
+    font-weight:bold;
+    margin-top:-1px;
+    padding:1px 5px;
+    text-decoration:none;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+}
+div.box > h2 > a.create:hover {
+    background:#ccc;
+}
+
 div.box > h3 {
     background: #DEDEC1; 
     color: #555;
@@ -212,3 +228,54 @@ div.feedback > ul {
 div.domains > ul > li:hover {
     background:#ccc;
 }
+
+form > fieldset {
+    border:0;
+    margin:0;
+    padding:10px;
+}
+form > fieldset > p {
+    clear:both;
+    margin: 5px 0;
+    font-size:1.3em;
+}
+
+form > fieldset > p.textfield > label, 
+form > fieldset > p.integerfield > label {
+    display:block;
+    width:240px;
+    float:left;
+    text-align:right;
+    padding: 4px 10px 0 0;
+}
+
+form > fieldset > p.textfield > input, 
+form > fieldset > p.integerfield > input {
+    padding: 2px;
+    color:#333;
+}
+
+form > fieldset > p.textfield > input {
+    width: 450px;
+}
+form > fieldset > p.integerfield > input {
+    width: 40px;
+}
+
+form > fieldset > p.checkfield {
+    margin-left:250px;
+}
+form > fieldset > p.submit {
+    width: 700px;
+    text-align:right;
+}
+
+form > fieldset > p.error > input {
+    border: 1px solid red;
+}
+
+form > fieldset > p > span.error_message {
+    color:red;
+}
+
+
