@@ -58,11 +58,11 @@ Edit a domain
 =cut
 sub edit : PathPart( 'edit' ) Chained( 'element_chain' ) Args( 0 ) {
     my ( $self, $c ) = @_;
-    my $domain = $c->stash->{domain};
     my $form = postadmin::Form::Domain->new;
 
-    if ( $form->process( item => $domain, params => $c->req->params ) ) {
-        $c->res->body( 'Edit action on ' . $domain->domain . ' saved' );
+    if ( my $domain = $form->process( schema => $c->model('Postfix'), params => $c->req->params ) ) {
+        $c->add_feedback( info  => 'Domain ' . $domain->domain . ' saved' );
+        $c->res->redirect( $c->uri_for('/domain') );
     }
     else {
         $c->stash( 
@@ -75,9 +75,11 @@ sub edit : PathPart( 'edit' ) Chained( 'element_chain' ) Args( 0 ) {
 sub create : Path(create) Args(0) {
     my ( $self, $c ) = @_;
     my $form = postadmin::Form::Domain->new;
+    my $domain = $c->model('Postfix::Domain')->new_result({});
 
-    if ( $form->process( schema => $c->model('Postfix'), params => $c->req->params ) ) {
-        $c->res->body( 'domain created?' );
+    if ( $form->process( item => $domain, params => $c->req->params ) ) {
+        $c->add_feedback( info  => 'Domain ' . $domain->domain . ' created' );
+        $c->res->redirect( $c->uri_for('/domain') );
     }
     else {
         $c->stash( 
@@ -104,6 +106,8 @@ sub delete : PathPart( 'delete' ) Chained( 'element_chain' ) Args( 0 ) {
     else {
         $c->add_feedback( info => 'Domain ' . $domain->domain . ' has been deleted' );
     }
+
+    $c->res->redirect( $c->uri_for('/domain') );
 }
 
 =head1 togle_active
