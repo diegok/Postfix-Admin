@@ -2,7 +2,10 @@ package postadmin::Form::Domain;
 
 use HTML::FormHandler::Moose;
     extends 'HTML::FormHandler::Model::DBIC';
-    with 'postadmin::Form::Render::FreeKey';
+    with (
+        'postadmin::Form::Role::AutoLog', 
+        'postadmin::Form::Render::FreeKey'
+    );
 
 has '+item_class' => ( default => 'Domain' );
 

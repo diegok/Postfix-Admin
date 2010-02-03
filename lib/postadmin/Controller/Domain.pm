@@ -58,9 +58,10 @@ Edit a domain
 =cut
 sub edit : PathPart( 'edit' ) Chained( 'element_chain' ) Args( 0 ) {
     my ( $self, $c ) = @_;
+    my $domain = $c->stash->{domain};
     my $form = postadmin::Form::Domain->new;
 
-    if ( my $domain = $form->process( schema => $c->model('Postfix'), params => $c->req->params ) ) {
+    if ( $form->process( item => $domain, params => $c->req->params, log => $c->get_req_logdata ) ) {
         $c->add_feedback( info  => 'Domain ' . $domain->domain . ' saved' );
         $c->res->redirect( $c->uri_for('/domain') );
     }
@@ -75,9 +76,9 @@ sub edit : PathPart( 'edit' ) Chained( 'element_chain' ) Args( 0 ) {
 sub create : Path(create) Args(0) {
     my ( $self, $c ) = @_;
     my $form = postadmin::Form::Domain->new;
-    my $domain = $c->model('Postfix::Domain')->new_result({});
+    my $domain = $c->model('Postfix::Domain')->new_result( {} );
 
-    if ( $form->process( item => $domain, params => $c->req->params ) ) {
+    if ( $form->process( item => $domain, params => $c->req->params, log => $c->get_req_logdata ) ) {
         $c->add_feedback( info  => 'Domain ' . $domain->domain . ' created' );
         $c->res->redirect( $c->uri_for('/domain') );
     }
@@ -97,6 +98,7 @@ Delete a domain
 sub delete : PathPart( 'delete' ) Chained( 'element_chain' ) Args( 0 ) {
     my ( $self, $c ) = @_;
     my $domain = $c->stash->{domain};
+    $domain->log( $c->get_req_logdata );
 
     eval { $domain->delete };
     if ($@) {
@@ -118,7 +120,8 @@ Toggle the active flag of a domain
 sub toggle_active : PathPart( 'toggle' ) Chained( 'element_chain' ) Args( 0 ) {
     my ( $self, $c ) = @_;
     my $domain = $c->stash->{domain};
-
+    $domain->log( $c->get_req_logdata );
+    
     if ( $domain->active ) {
         $domain->deactivate;
         $c->add_feedback( info => 'Domain ' . $domain->domain . ' has been deactivated' );

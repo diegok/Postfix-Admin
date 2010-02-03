@@ -44,6 +44,20 @@ sub add_feedback {
     return 1;
 }
 
+=head1 get_req_logdata
+    
+    Returns an aref with username and hostname/ip from
+    the request to be used when creating log records.
+
+=cut
+sub get_req_logdata {
+    my $c = shift;
+
+    return {
+        username => sprintf( "%s (%s)", 'posmaster@replace-this.com', $c->req->hostname )
+    };
+}
+
 =head1 NAME
 
 postadmin - Catalyst based application

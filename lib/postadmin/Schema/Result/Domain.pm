@@ -5,7 +5,7 @@ use warnings;
 
 use base 'DBIx::Class';
 
-__PACKAGE__->load_components( "TimeStamp", "InflateColumn::DateTime", "Core");
+__PACKAGE__->load_components( "+postadmin::Schema::Component::AutoLog", "TimeStamp", "Core");
 __PACKAGE__->table("domain");
 __PACKAGE__->add_columns(
   "domain",
@@ -45,6 +45,7 @@ __PACKAGE__->add_columns(
   "active",
   { data_type => "TINYINT", default_value => 1, is_nullable => 0, size => 1 },
 );
+
 __PACKAGE__->set_primary_key("domain");
 
 
@@ -54,7 +55,8 @@ __PACKAGE__->set_primary_key("domain");
 __PACKAGE__->has_many( mailboxes => 'postadmin::Schema::Result::Mailbox' => 'domain' );
 __PACKAGE__->has_many( aliases   => 'postadmin::Schema::Result::Alias'   => 'domain' );
 
-sub activate   { $_[0]->active(1); $_[0]->update(); };
-sub deactivate { $_[0]->active(0); $_[0]->update(); };
+sub activate   { $_[0]->active(1); $_[0]->log->{action}='Activate domain'; $_[0]->update(); };
+sub deactivate { $_[0]->active(0); $_[0]->log->{action}='Deactivate domain'; $_[0]->update(); };
 
+sub log_data { $_[0]->domain }
 1;
