@@ -1,8 +1,6 @@
 package postadmin::Controller::Domain::Mailbox;
 
-use strict;
-use warnings;
-use parent 'Catalyst::Controller';
+use Moose; BEGIN { extends 'Catalyst::Controller' }
 use postadmin::Form::Mailbox;
 
 =head1 NAME
@@ -54,7 +52,7 @@ sub edit : PathPart( 'edit' ) Chained( 'element_chain' ) Args( 0 ) {
     my $domain = $c->stash->{domain};
     my $mailbox = $c->stash->{mailbox};
     my $form = postadmin::Form::Mailbox->new( domain => $domain->domain );
-
+    $form->field('password')->required(0);
     if ( $form->process( item => $mailbox, params => $c->req->params, log => $c->get_req_logdata ) ) {
         $c->add_feedback( info  => 'Mailbox ' . $mailbox->email_address . ' saved' );
         $c->res->redirect( $c->uri_for('/domain', $domain->domain, 'mailboxes') );
@@ -79,7 +77,7 @@ sub create : PathPart( 'mailbox/create' ) Chained( '/domain/element_chain' ) Arg
     my $mailbox = $c->model('Postfix::Mailbox')->new_result({});
 
     if ( $form->process( item => $mailbox, params => $c->req->params, log => $c->get_req_logdata ) ) {
-        $c->add_feedback( info  => 'Mailbox ' . $mailbox->username . ' created' );
+        $c->add_feedback( info  => 'Mailbox ' . $mailbox->email_address . ' created' );
         $c->res->redirect( $c->uri_for('/domain', $domain->domain, 'mailboxes') );
     }
     else {
@@ -102,14 +100,14 @@ sub delete : PathPart( 'delete' ) Chained( 'element_chain' ) Args( 0 ) {
 
     eval { $mailbox->delete };
     if ($@) {
-        $c->add_feedback( info  => 'Mailbox ' . $mailbox->username . ' can\'t be deleted' );
+        $c->add_feedback( info  => 'Mailbox ' . $mailbox->email_address . ' can\'t be deleted' );
         $c->add_feedback( error => $@ );
     }
     else {
-        $c->add_feedback( info => 'Mailbox ' . $mailbox->username . ' has been deleted' );
+        $c->add_feedback( info => 'Mailbox ' . $mailbox->email_address . ' has been deleted' );
     }
 
-    $c->res->redirect( $c->uri_for($c->controller('/domain/mailbox')->action('list')) );
+    $c->res->redirect( $c->uri_for( '/domain', $mailbox->domain, 'mailboxes' ) );
 }
 
 =head1 togle_active
@@ -124,19 +122,59 @@ sub toggle_active : PathPart( 'toggle' ) Chained( 'element_chain' ) Args( 0 ) {
     
     if ( $mailbox->active ) {
         $mailbox->deactivate;
-        $c->add_feedback( info => 'Mailbox ' . $mailbox->username . ' has been deactivated' );
+        $c->add_feedback( info => 'Mailbox ' . $mailbox->email_address . ' has been deactivated' );
     }
     else {
         $mailbox->activate;
-        $c->add_feedback( info => 'mailbox ' . $mailbox->username . ' has been activated' );
+        $c->add_feedback( info => 'mailbox ' . $mailbox->email_address . ' has been activated' );
     }
 
-    $c->res->redirect( $c->uri_for($c->controller('/domain/mailbox')->action('list')) );
+    $c->res->redirect( $c->uri_for( '/domain', $mailbox->domain, 'mailboxes' ) );
+}
+
+=head2 multi_action_redispatch
+
+    Try to exec allowed multi-mailbox actions on the requested action.
+
+    When no actions catch the request, this action will try to exec
+    the action mapped from allow_multi on the mailbox_username's param 
+    received.
+
+=cut
+has 'allow_multi' => (
+    is  => 'ro',
+    isa => 'HashRef',
+    default => sub {{
+        toggle => 'toggle_active',
+        delete => 'delete',
+    }}
+);
+
+sub multi_action_redispatch : PathPart( 'mailbox' ) Chained( '/domain/element_chain' ) Args( 1 ) {
+    my ( $self, $c, $action) = @_;
+    my $domain = $c->stash->{domain};
+
+    if ( exists $self->allow_multi->{$action} ) {
+        for my $username ( $c->req->param('mailbox_username') ) {
+            $username .= '@' . $domain->domain;
+            if ( $c->stash->{mailbox} = $c->model('Postfix::Mailbox')->search( username => $username )->first ) {
+                $c->forward( $self->allow_multi->{$action} );
+            }
+            else {
+                $c->add_feedback( error => "Can't find mailbox '$username'." );
+            }
+        }
+    }
+    else {
+        $c->add_feedback( error => "Action '$action' is not defined." );
+    }
+
+    $c->res->redirect( $c->uri_for( '/domain', $domain->domain, 'mailboxes' ) );
 }
 
 =head1 AUTHOR
 
-Diego Kuperman,,,
+Diego Kuperman
 
 =head1 LICENSE
 

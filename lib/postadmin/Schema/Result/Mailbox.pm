@@ -103,4 +103,9 @@ sub maildir {
     return $self->_maildir( $value );
 }
 
+sub activate   { $_[0]->active(1); $_[0]->log->{action}='Activate mailbox'; $_[0]->update(); };
+sub deactivate { $_[0]->active(0); $_[0]->log->{action}='Deactivate mailbox'; $_[0]->update(); };
+
+sub log_data { $_[0]->email_address }
+
 1;
