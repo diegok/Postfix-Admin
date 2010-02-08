@@ -1,0 +1,4 @@
+<div class="box">
+    <h2>Edit domain [% domain.domain %]</h2>
+    [% form.render %]
+</div>

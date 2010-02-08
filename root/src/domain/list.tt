@@ -29,6 +29,9 @@
 [% END -%]
     </ul>
     <p> 
+        <a href="[% c.uri_for('_value_/mailboxes') %]" class="domain_name_action single">Mailboxes</a>
+        <a href="[% c.uri_for('_value_/aliases') %]" class="domain_name_action single">Aliases</a>
+        |
         <a href="[% c.uri_for('toggle') %]" class="domain_name_action any">Toggle active</a>
         <a href="[% c.uri_for('_value_/edit') %]" class="domain_name_action single">Edit</a>
         <a href="[% c.uri_for('delete') %]" class="domain_name_action any">Delete</a>

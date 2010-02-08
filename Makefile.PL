@@ -1,6 +1,5 @@
 #!/usr/bin/env perl
-# IMPORTANT: if you delete this file your app will not work as
-# expected.  You have been warned.
+
 use inc::Module::Install;
 
 name 'postadmin';
@@ -11,13 +10,15 @@ requires 'Catalyst::Plugin::ConfigLoader';
 requires 'Catalyst::Plugin::Static::Simple';
 requires 'Catalyst::Action::RenderView';
 requires 'parent';
-requires 'Config::General'; # This should reflect the config file format you've chosen
-                 # See Catalyst::Plugin::ConfigLoader for supported formats
+requires 'Config::General'; 
 
 requires 'DBIx::Class';
 requires 'DBIx::Class::TimeStamp';
+requires 'Crypt::PasswdMD5';
+
 requires 'HTML::FormHandler';
 requires 'HTML::FormHandler::Model::DBIC';
+requires 'Email::Valid';
 
 catalyst;
 

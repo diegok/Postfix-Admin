@@ -143,19 +143,23 @@ sub toggle_active : PathPart( 'toggle' ) Chained( 'element_chain' ) Args( 0 ) {
     received.
 
 =cut
-our $allow_multi = {
-    toggle => 'toggle_active',
-    delete => 'delete',
-};
+has 'allow_multi' => (
+    is  => 'ro',
+    isa => 'HashRef',
+    default => sub {{
+        toggle => 'toggle_active',
+        delete => 'delete',
+    }}
+);
 
 sub default :Path {
     my ( $self, $c ) = @_;
     my $action = ( split '/', $c->req->path )[1];
 
-    if ( exists $allow_multi->{$action} ) {
+    if ( exists $self->allow_multi->{$action} ) {
         for my $domain_name ( $c->req->param('domain_name') ) {
             if ( $c->stash->{domain} = $c->model('Postfix::Domain')->find( $domain_name ) ) {
-                $c->forward( $allow_multi->{$action} );
+                $c->forward( $self->allow_multi->{$action} );
             }
             else {
                 $c->add_feedback( error => "Can't find domain '$domain_name'." );

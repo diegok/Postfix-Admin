@@ -1,0 +1,32 @@
+[% html.title           = 'Mailboxes for domain ' _ domain.domain  -%]
+[% html.js.list_actions = 1 -%]
+[% html.menu.domains    = 1 -%]
+<h2>Mailboxes for domain [% domain.domain %]</h2>
+<div class="box mailboxes">
+    <h2>Mailboxes <a href="[% c.uri_for( '/domain', domain.domain 'mailbox/create' ) %]" class="create" title="Add mailbox">+</a></h2>
+    <h3>
+        <input type="checkbox" class="toggle" id="mailbox_username" />
+        <span class="user">Email</span>
+        <span class="name">Name</span>
+        <span class="quota">Quota</span>
+        <span class="last_mod">Modified</span>
+        <span class="active">Active</span>
+    </h3>
+    <ul>
+[% FOREACH mailbox IN mailboxes -%]
+        <li>
+            <input type="checkbox" name="mailbox_username" value="[% mailbox.username %]" />
+            <span class="user">[% mailbox.email_address %]</span>
+            <span class="name">[% mailbox.name %]</span>
+            <span class="quota">[% mailbox.maxquota || 'unlimited' %]</span>
+            <span class="last_mod">[% mailbox.modified.dmy('/') %]</span>
+            <span class="active">[% IF mailbox.active %]yes[% ELSE %]no[% END %]</span>
+        </li>
+[% END -%]
+    </ul>
+    <p> 
+        <a href="[% c.uri_for('/domain', domain.domain ,'mailbox/toggle') %]" class="mailbox_username_action any">Toggle active</a>
+        <a href="[% c.uri_for('/domain', domain.domain ,'mailbox/_value_/edit') %]" class="mailbox_username_action single">Edit</a>
+        <a href="[% c.uri_for('/domain', domain.domain ,'mailbox/delete') %]" class="mailbox_username_action any">Delete</a>
+    </p>
+</div>

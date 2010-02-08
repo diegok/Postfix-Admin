@@ -147,6 +147,8 @@ div.box span.name {
     width:160px;
 }
 
+div.mailboxes span.name,
+div.box span.user,
 div.box span.desc {
     display:inline-block;
     width:320px;
@@ -241,15 +243,17 @@ form > fieldset > p {
 }
 
 form > fieldset > p.textfield > label, 
+form > fieldset > p.passfield > label, 
 form > fieldset > p.integerfield > label {
     display:block;
-    width:240px;
+    width:190px;
     float:left;
     text-align:right;
     padding: 4px 10px 0 0;
 }
 
 form > fieldset > p.textfield > input, 
+form > fieldset > p.passfield > input, 
 form > fieldset > p.integerfield > input {
     padding: 2px;
     color:#333;
@@ -263,7 +267,7 @@ form > fieldset > p.integerfield > input {
 }
 
 form > fieldset > p.checkfield {
-    margin-left:250px;
+    margin-left:200px;
 }
 form > fieldset > p.submit {
     width: 700px;

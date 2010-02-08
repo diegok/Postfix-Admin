@@ -6,6 +6,7 @@ use HTML::FormHandler::Moose;
         'postadmin::Form::Role::AutoLog', 
         'postadmin::Form::Render::FreeKey'
     );
+use Email::Valid;
 
 has '+item_class' => ( default => 'Domain' );
 
@@ -15,7 +16,7 @@ has_field 'domain' => (
     required  => 1,
     apply     => [
         {
-            check   => qr/^[a-z]+(?:\.[a-z]+)/,
+            check   => sub { Email::Valid->address( 'fakeuser@' . $_[0] ) },
             message => 'Must be a valid domain name'
         }
     ]

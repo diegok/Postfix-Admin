@@ -271,6 +271,9 @@ sub render_integer {
 
 sub render_password {
     my ( $self, $field ) = @_;
+
+    $field->css_class( 'passfield' );
+
     my $output = '<input type="password" name="';
     $output .= $field->html_name . '"';
     $output .= ' id="' . $field->id . '"';
