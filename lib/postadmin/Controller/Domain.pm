@@ -13,25 +13,12 @@ Catalyst Controller.
 
 =head1 METHODS
 
-=cut
-
-=head2 index
-
-    List domains on controller root
-
-=cut
-sub index :Path :Args(0) {
-    my ( $self, $c ) = @_;
-
-    $c->detach('list');
-}
-
 =head1 list
 
 List all domains
 
 =cut
-sub list : Private {
+sub list : PathPart( 'domain' ) Chained( '/auth/need_login' ) Args( 0 ) {
     my ( $self, $c ) = @_;
 
     $c->stash( domains  => [ $c->model('Postfix::Domain')->all() ] );
@@ -43,7 +30,7 @@ sub list : Private {
 Base chain for actions related to one domain
 
 =cut
-sub element_chain : PathPart( 'domain' ) Chained( '/' ) CaptureArgs( 1 ) {
+sub element_chain : PathPart( 'domain' ) Chained( '/auth/need_login' ) CaptureArgs( 1 ) {
     my ( $self, $c, $domain_name ) = @_;
 
     unless ( $c->stash->{domain} = $c->model('Postfix::Domain')->find( $domain_name ) ) {
@@ -73,7 +60,7 @@ sub edit : PathPart( 'edit' ) Chained( 'element_chain' ) Args( 0 ) {
     }
 }
 
-sub create : Path(create) Args(0) {
+sub create : PathPart( 'domain/create' ) Chained( '/auth/need_login' ) Args( 0 ) {
     my ( $self, $c ) = @_;
     my $form = postadmin::Form::Domain->new;
     my $domain = $c->model('Postfix::Domain')->new_result( {} );
@@ -134,7 +121,7 @@ sub toggle_active : PathPart( 'toggle' ) Chained( 'element_chain' ) Args( 0 ) {
     $c->res->redirect( $c->uri_for('/domain') );
 }
 
-=head2 default
+=head2 multi_action_redispatch
 
     Try to exec allowed multi-domain actions on the requested action.
 
@@ -152,9 +139,8 @@ has 'allow_multi' => (
     }}
 );
 
-sub default :Path {
-    my ( $self, $c ) = @_;
-    my $action = ( split '/', $c->req->path )[1];
+sub multi_action_redispatch : PathPart( 'domain' ) Chained( '/auth/need_login' ) Args( 1 ) {
+    my ( $self, $c, $action ) = @_;
 
     if ( exists $self->allow_multi->{$action} ) {
         for my $domain_name ( $c->req->param('domain_name') ) {

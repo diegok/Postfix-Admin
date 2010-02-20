@@ -14,14 +14,11 @@ Catalyst Controller.
 
 =head1 METHODS
 
-=cut
-
-
-=head2 index
+=head2 list
 
 =cut
 
-sub index :Path :Args(0) {
+sub list : PathPart( 'log' ) Chained( '/auth/need_login' ) Args( 0 ) {
     my ( $self, $c ) = @_;
 
     my $logs = $c->model('Postfix::Log')->search( {}, {

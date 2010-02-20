@@ -1,6 +1,9 @@
 [% IF template.name.match('\.(css|js|txt|part)');
        debug("Passing page through as text: $template.name");
        content;
+   ELSIF template.name.match('\.page');
+       debug("Applying HTML page wrappers without layout to $template.name\n");
+       content WRAPPER html;
    ELSE;
        debug("Applying HTML page layout wrappers to $template.name\n");
        content WRAPPER html + layout;

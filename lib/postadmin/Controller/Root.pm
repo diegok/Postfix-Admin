@@ -1,8 +1,6 @@
 package postadmin::Controller::Root;
 
-use strict;
-use warnings;
-use parent 'Catalyst::Controller';
+use Moose; BEGIN { extends 'Catalyst::Controller' }
 
 #
 # Sets the actions in this controller to be registered with no prefix

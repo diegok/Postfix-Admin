@@ -282,4 +282,42 @@ form > fieldset > p > span.error_message {
     color:red;
 }
 
+div#login {
+    width: 400px;
+    background:#ccc;
+    margin: 100px auto 0;
+    padding:6px;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+}
 
+div#login > form {
+    background:#fff;
+    margin:0;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+}
+
+div#login form > fieldset > p.textfield > label, 
+div#login form > fieldset > p.passfield > label { 
+    display:block;
+    float:none;
+    text-align:left;
+    padding: 0;
+    color:#666;
+}
+div#login form > fieldset > p.textfield > input, 
+div#login form > fieldset > p.passfield > input { 
+    width: 300px;
+    font-size:1.2em;
+}
+
+div#login form > fieldset > p {
+    width: auto;
+    margin: 15px 0;
+    padding: 0 0 0 39px;
+}
+
+div#login form > fieldset > p.submit {
+    padding: 0 39px 0 0;
+}

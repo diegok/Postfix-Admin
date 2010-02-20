@@ -89,6 +89,16 @@ sub password {
     return $self->_password( unix_md5_crypt( $clearpw ) );
 }
 
+=head2 check_password
+
+Check if a password match with the crypted one.
+
+=cut
+sub check_password {
+    my ( $self, $clearpw ) = @_;
+    return unix_md5_crypt( $clearpw, $self->password ) eq $self->password;
+}
+
 =head2 maildir
 
 Accessor for maildir, create or move the directory on set.

@@ -1,8 +1,7 @@
 package postadmin::Controller::Domain::Alias;
 
-use strict;
-use warnings;
-use parent 'Catalyst::Controller';
+use Moose; BEGIN { extends 'Catalyst::Controller' }
+#use postadmin::Form::Alias;
 
 =head1 NAME
 

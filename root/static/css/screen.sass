@@ -1,0 +1,275 @@
+body
+  margin: 0
+  padding: 0
+  background: #49535B
+  color: #fff
+  font-family: Helvetica
+  font-size: 11px
+
+
+div, h1, h2, h3, h4, h5, h6, p, ul, li, input
+  margin: 0
+  padding: 0
+
+
+li
+  list-style: none
+
+
+div
+  &#header
+    background: #DCDCBF
+
+    > div
+      width: 980px
+      margin: 0 auto
+      padding: 10px
+      height: 14px
+
+    h1 a
+      color: #49535B
+      background: #fff
+      padding: 10px 8px 6px 8px
+      position: absolute
+      top: 0
+      border: 2px solid #ccc
+      border-top: 0
+      border-bottom-left-radius: 6px
+      border-bottom-right-radius: 6px
+      -moz-border-radius-bottomleft: 4px
+      -moz-border-radius-bottomright: 4px
+      -webkit-border-bottom-left-radius: 6px
+      -webkit-border-bottom-right-radius: 6px
+      text-decoration: none
+
+  &#subheader
+    background: #D7D7BB
+    color: #49535B
+
+    > div
+      width: 960px
+      margin: 0 auto
+      padding: 12px 0 6px 10px
+      min-height: 18px
+
+    li
+      display: inline-block
+      border-right: 1px solid #bbb
+
+      &.last
+        border: 0
+
+      > a
+        display: block
+        text-decoration: none
+        color: #666
+        font-size: 1.1em
+        font-weight: bold
+        padding: 4px 10px
+
+        &:hover, &.active
+          text-decoration: underline
+
+  &#content
+    width: 960px
+    margin: 0 auto
+
+    > h2
+      font-size: 1.9em
+      margin-top: 15px
+      font-weight: normal
+
+  &#footer
+    width: 980px
+    margin: 15px auto
+
+  &.box
+    background: white
+    color: #666
+    border-radius: 6px
+    -moz-border-radius: 6px
+    -webkit-border-radius: 6px
+    margin-top: 15px
+
+    >
+      h2
+        background: #363E44
+        color: #eee
+        padding: 10px
+        border-top-left-radius: 6px
+        border-top-right-radius: 6px
+        -moz-border-radius-topleft: 6px
+        -moz-border-radius-topright: 6px
+        -webkit-border-top-left-radius: 6px
+        -webkit-border-top-right-radius: 6px
+        font-size: 1.3em
+        font-weight: normal
+
+        > a.create
+          float: right
+          background: #777
+          border: 1px solid #444
+          color: #222
+          font-weight: bold
+          margin-top: -1px
+          padding: 1px 5px
+          text-decoration: none
+          -moz-border-radius: 3px
+          -webkit-border-radius: 3px
+
+          &:hover
+            background: #ccc
+
+      h3
+        background: #DEDEC1
+        color: #555
+        padding: 8px 15px 7px
+        font-size: 1em
+        border-bottom: 1px solid #ccc
+
+    span.name
+      display: inline-block
+      width: 160px
+
+  &.mailboxes span.name
+    display: inline-block
+    width: 320px
+
+  &.box
+    span
+      &.user, &.desc
+        display: inline-block
+        width: 320px
+
+      &.who
+        display: inline-block
+        width: 280px
+
+      &.action
+        display: inline-block
+        width: 480px
+
+      &.alias, &.mbox, &.quota, &.last_mod, &.date, &.time, &.active
+        display: inline-block
+        width: 80px
+        text-align: center
+
+    > ul > li
+      padding: 8px 15px
+      border-bottom: 1px solid #eee
+      clear: both
+
+    input
+      margin-right: 10px
+
+    > p
+      padding: 12px 15px
+      text-align: right
+
+  &.pager a, &.box > p > a
+    text-decoration: none
+    color: #444
+    font-size: 1em
+    padding: 2px 5px
+
+  &.pager a:hover
+    text-decoration: underline
+
+  &.box > p > a
+    &:hover
+      text-decoration: underline
+
+    &.inactive
+      cursor: not-allowed
+
+  &.pager a.active, &.box > p > a.active
+    background: #eee
+
+  &.pager
+    padding: 12px 0
+    text-align: center
+
+  &.app_error
+    padding: 12px 10px
+    text-align: center
+
+  &.feedback > ul
+    padding: 5px
+
+  &.domains > ul > li:hover
+    background: #ccc
+
+
+form > fieldset
+  border: 0
+  margin: 0
+  padding: 10px
+
+  > p
+    clear: both
+    margin: 5px 0
+    font-size: 1.3em
+
+    &.textfield > label, &.passfield > label, &.integerfield > label
+      display: block
+      width: 190px
+      float: left
+      text-align: right
+      padding: 4px 10px 0 0
+
+    &.textfield > input, &.passfield > input, &.integerfield > input
+      padding: 2px
+      color: #333
+
+    &.textfield > input
+      width: 450px
+
+    &.integerfield > input
+      width: 40px
+
+    &.checkfield
+      margin-left: 200px
+
+    &.submit
+      width: 700px
+      text-align: right
+
+    &.error > input
+      border: 1px solid red
+
+    > span.error_message
+      color: red
+
+
+div#login
+  width: 400px
+  background: #ccc
+  margin: 100px auto 0
+  padding: 6px
+  -moz-border-radius: 6px
+  -webkit-border-radius: 6px
+
+  > form
+    background: #fff
+    margin: 0
+    -moz-border-radius: 6px
+    -webkit-border-radius: 6px
+
+  form > fieldset > p
+    width: auto
+    margin: 15px 0
+    padding: 0 0 0 39px
+
+    &.textfield > label, &.passfield > label
+      display: block
+      float: none
+      text-align: left
+      padding: 0
+      color: #666
+
+    &.textfield > input, &.passfield > input
+      width: 300px
+      font-size: 1.2em
+
+    &.submit
+      padding: 0 39px 0 0

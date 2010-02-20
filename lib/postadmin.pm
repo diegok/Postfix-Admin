@@ -1,10 +1,8 @@
 package postadmin;
 
-use strict;
-use warnings;
+use Moose;
+use namespace::autoclean;
 
-use Catalyst::Runtime 5.80;
-use parent qw/Catalyst/;
 use Catalyst qw/
     ConfigLoader
     Static::Simple
@@ -12,13 +10,33 @@ use Catalyst qw/
     Session
     Session::Store::FastMmap
     Session::State::Cookie
+
+    Authentication
 /;
+extends 'Catalyst';
 
 our $VERSION = '0.01';
 
-__PACKAGE__->config( name => 'postadmin' );
-
-# TODO: set defaults
+__PACKAGE__->config(
+    name                     => 'postadmin',
+    'Plugin::Authentication' => {
+        default_realm => 'mailbox',
+        realms        => {
+            mailbox => {
+                credential => {
+                    class          => 'Password',
+                    password_field => 'password',
+                    password_type  => 'self_check',
+                },
+                store => {
+                    class      => 'DBIx::Class',
+                    user_model => 'Postfix::Mailbox',
+                    id_field   => 'username'
+                }
+            }
+        }
+    },
+);
 
 # Start the application
 __PACKAGE__->setup();
