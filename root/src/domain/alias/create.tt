@@ -1,0 +1,8 @@
+[% html.title           = 'Create new alias for domain ' _ domain.domain -%]
+[% html.menu.domains    = 1 -%]
+
+<h2>Create new alias for domain [% domain.domain  %]</h2>
+<div class="box">
+    <h2>Alias for domain [% domain.domain %]</h2>
+    [% form.render %]
+</div>

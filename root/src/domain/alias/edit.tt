@@ -1,0 +1,8 @@
+[% html.title           = 'Edit alias ' _ alias.address -%]
+[% html.menu.domains    = 1 -%]
+
+<h2>Edit alias on domain [% domain.domain  %]</h2>
+<div class="box">
+    <h2>Edit alias [% alias.address %]</h2>
+    [% form.render %]
+</div>

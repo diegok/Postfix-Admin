@@ -1,6 +1,8 @@
 [% html.title           = 'Create new mailbox for domain ' _ domain.domain -%]
 [% html.menu.domains    = 1 -%]
+
+<h2>Create new mailbox for domain [% domain.domain  %]</h2>
 <div class="box">
-    <h2>Create new mailbox for domain [% domain.domain  %]</h2>
+    <h2>Mailbox for domain [% domain.domain  %]</h2>
     [% form.render %]
 </div>

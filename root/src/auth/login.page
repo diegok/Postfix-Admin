@@ -1,3 +1,4 @@
+[% html.title = 'Login' -%]
 <div id="login">
 [% form.render %]
 </div>

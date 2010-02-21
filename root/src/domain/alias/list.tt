@@ -1,0 +1,30 @@
+[% html.title           = 'Aliases for domain ' _ domain.domain  -%]
+[% html.js.list_actions = 1 -%]
+[% html.menu.domains    = 1 -%]
+<h2>Aliases for domain [% domain.domain %]</h2>
+<div class="box aliases">
+    <h2>Aliases <a href="[% c.uri_for( '/domain', domain.domain 'alias/create' ) %]" class="create" title="Add alias">+</a></h2>
+    <h3>
+        <input type="checkbox" class="toggle" id="alias_username" />
+        <span class="user">Username</span>
+        <span class="goto">Goto</span>
+        <span class="last_mod">Modified</span>
+        <span class="active">Active</span>
+    </h3>
+    <ul>
+[% FOREACH alias IN aliases -%]
+        <li>
+            <input type="checkbox" name="alias_username" value="[% alias.username %]" />
+            <span class="user">[% alias.username %]</span>
+            <span class="goto">[% alias.goto %]</span>
+            <span class="last_mod">[% alias.modified.dmy('/') %]</span>
+            <span class="active">[% IF alias.active %]yes[% ELSE %]no[% END %]</span>
+        </li>
+[% END -%]
+    </ul>
+    <p> 
+        <a href="[% c.uri_for('/domain', domain.domain ,'alias/toggle') %]" class="alias_username_action any">Toggle active</a>
+        <a href="[% c.uri_for('/domain', domain.domain ,'alias/_value_/edit') %]" class="alias_username_action single">Edit</a>
+        <a href="[% c.uri_for('/domain', domain.domain ,'alias/delete') %]" class="alias_username_action any">Delete</a>
+    </p>
+</div>

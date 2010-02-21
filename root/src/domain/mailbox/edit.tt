@@ -1,4 +1,8 @@
+[% html.title           = 'Edit mailbox ' _ mailbox.email_address -%]
+[% html.menu.domains    = 1 -%]
+
+<h2>Edit mailbox on domain [% domain.domain  %]</h2>
 <div class="box">
-    <h2>Edit domain [% domain.domain %]</h2>
+    <h2>Edit mailbox [% mailbox.email_address %]</h2>
     [% form.render %]
 </div>

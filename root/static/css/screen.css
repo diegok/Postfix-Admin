@@ -154,6 +154,15 @@ div.box span.desc {
     width:320px;
 }
 
+div.aliases span.user {
+    width:260px;
+}
+
+div.box span.goto {
+    display:inline-block;
+    width:460px;
+}
+
 div.box span.who {
     display:inline-block;
     width:280px;
@@ -227,7 +236,7 @@ div.feedback > ul {
     padding:5px;
 }
 
-div.domains > ul > li:hover {
+div.box > ul > li:hover {
     background:#ccc;
 }
 
