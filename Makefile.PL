@@ -12,6 +12,9 @@ requires 'Catalyst::Action::RenderView';
 requires 'Catalyst::Plugin::Session';
 requires 'Catalyst::Plugin::Session::Store::FastMmap';
 requires 'Catalyst::Plugin::Session::State::Cookie';
+requires ' Catalyst::Authentication::Store::DBIx::Class';
+
+requires 'Catalyst::View::TT';
 
 requires 'parent';
 requires 'Config::General'; 

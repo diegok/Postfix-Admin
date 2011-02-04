@@ -42,9 +42,6 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("username", "domain");
 
 
-# Created by DBIx::Class::Schema::Loader v0.04006 @ 2009-11-20 14:13:27
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:l7CyRyfT56Q4reURodEUuw
-
 __PACKAGE__->belongs_to( domain => 'postadmin::Schema::Result::Domain' => 'domain' );
 
 =head2 username
@@ -63,9 +60,8 @@ sub username {
     $self->throw_exception( 'Username should not have domain name on set' ) if $value =~ /@/;
     $self->throw_exception( 'Unable to set username  before domain' ) unless $domain;
 
-    $value = sprintf( '%s@%s', $value, $domain );
-    $self->maildir( $value . '/' );
-    return $self->_username( $value );
+    $self->maildir( sprintf( '%s/%s/Maildir', $domain, $value ) );
+    return $self->_username( sprintf( '%s@%s', $value, $domain ) );
 }
 
 =head2 email_address
