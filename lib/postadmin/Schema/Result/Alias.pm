@@ -55,7 +55,9 @@ __PACKAGE__->belongs_to( domain => 'postadmin::Schema::Result::Domain' => 'domai
 sub username {
     my $self = shift;
     if ( my $addr = $self->address ) {
-        return ( split '@', $addr )[0];
+        my ( $user, $domain ) = split '@', $addr;
+        return $user if $user;
+        return 'Catch-all';
     }
 }
 

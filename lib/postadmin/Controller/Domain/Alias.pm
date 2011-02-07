@@ -36,7 +36,7 @@ Base chain for actions related to one alias
 sub element_chain : PathPart( 'alias' ) Chained( '/domain/element_chain' ) CaptureArgs( 1 ) {
     my ( $self, $c, $username ) = @_;
     my $domain = $c->stash->{domain};
-
+    $username = '' if $username eq 'Catch-all';
     unless ( $c->stash->{alias} = $domain->aliases({ address => $username . '@' . $domain->domain })->first ) {
         $c->detach( '/error/element_not_found', [ 'alias' ] );
     }
@@ -155,8 +155,9 @@ sub multi_action_redispatch : PathPart( 'alias' ) Chained( '/domain/element_chai
 
     if ( exists $self->allow_multi->{$action} ) {
         for my $username ( $c->req->param('alias_username') ) {
+            $username = '' if $username eq 'Catch-all';
             $username .= '@' . $domain->domain;
-            if ( $c->stash->{alias} = $c->model('Postfix::Alias')->search( address => $username )->first ) {
+            if ( $c->stash->{alias} = $c->model('Postfix::Alias')->search({ address => $username })->first ) {
                 $c->forward( $self->allow_multi->{$action} );
             }
             else {

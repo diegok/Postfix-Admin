@@ -92,7 +92,8 @@ Check if a password match with the crypted one.
 =cut
 sub check_password {
     my ( $self, $clearpw ) = @_;
-    return unix_md5_crypt( $clearpw, $self->password ) eq $self->password;
+    my $crypt = unix_md5_crypt( $clearpw, $self->password );
+    return $crypt eq $self->password;
 }
 
 =head2 maildir

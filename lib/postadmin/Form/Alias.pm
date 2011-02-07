@@ -15,8 +15,12 @@ has 'domain'      => ( is => 'ro', required => 1 );
 
 has_field 'address' => ( type => 'Text', required => 1, apply => [
     {
-        check   => sub { Email::Valid->address( $_[0] ) },
-        message => 'Must be a valid email address'
+        check   => sub { 
+            my $str = shift;
+            $str = "fake$str" if $str =~ /^@/;
+            Email::Valid->address( $str ) 
+        },
+        message => 'Must be a valid email address or catchall domain starting with "@".'
     }
 ]);
 
