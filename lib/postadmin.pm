@@ -7,6 +7,8 @@ use Catalyst qw/
     ConfigLoader
     Static::Simple
 
+    Unicode::Encoding
+
     Session
     Session::Store::FastMmap
     Session::State::Cookie
@@ -18,7 +20,9 @@ extends 'Catalyst';
 our $VERSION = '0.01';
 
 __PACKAGE__->config(
-    name                     => 'postadmin',
+    name     => 'postadmin',
+    encoding => 'UTF-8',
+
     'Plugin::Authentication' => {
         default_realm => 'mailbox',
         realms        => {

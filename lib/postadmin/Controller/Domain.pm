@@ -30,7 +30,7 @@ sub list : PathPart( 'domain' ) Chained( '/auth/need_login' ) Args( 0 ) {
 Base chain for actions related to one domain
 
 =cut
-sub element_chain : PathPart( 'domain' ) Chained( '/auth/need_login' ) CaptureArgs( 1 ) {
+sub element_chain : PathPart( 'domain' ) Chained( '/auth/need_admin' ) CaptureArgs( 1 ) {
     my ( $self, $c, $domain_name ) = @_;
 
     unless ( $c->stash->{domain} = $c->model('Postfix::Domain')->find( $domain_name ) ) {
@@ -60,7 +60,7 @@ sub edit : PathPart( 'edit' ) Chained( 'element_chain' ) Args( 0 ) {
     }
 }
 
-sub create : PathPart( 'domain/create' ) Chained( '/auth/need_login' ) Args( 0 ) {
+sub create : PathPart( 'domain/create' ) Chained( '/auth/need_admin' ) Args( 0 ) {
     my ( $self, $c ) = @_;
     my $form = postadmin::Form::Domain->new;
     my $domain = $c->model('Postfix::Domain')->new_result( {} );

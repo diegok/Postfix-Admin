@@ -110,6 +110,33 @@ sub maildir {
     return $self->_maildir( $value );
 }
 
+sub is_admin {
+    my ($self, $val) = @_;
+
+    my $admins = $self->result_source->schema->resultset('Admin');
+
+    if ( defined $val ) {
+        my $adm = $admins->find($self->_username);
+        if ( $adm && $val == 0 ) {
+            $adm->delete();
+        }
+        elsif ( ! $adm ) {
+            $val = $admins->create({
+                username => $self->_username,
+                password => $self->_password,
+            });
+       }
+       else {
+            $val = $adm;
+       }
+    }
+    else {
+        $val = $admins->find($self->_username);
+    }
+
+    return $val;
+}
+
 sub activate   { $_[0]->active(1); $_[0]->log->{action}='Activate mailbox'; $_[0]->update(); };
 sub deactivate { $_[0]->active(0); $_[0]->log->{action}='Deactivate mailbox'; $_[0]->update(); };
 

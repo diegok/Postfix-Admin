@@ -65,6 +65,21 @@ sub need_login : PathPart( '' ) Chained( '/' ) CaptureArgs( 0 ) {
     }
 }
 
+=head1 need_admin
+
+Base method for chains that needs a user logged in.
+
+=cut
+sub need_admin : PathPart( '' ) Chained( 'need_login' ) CaptureArgs( 0 ) {
+    my ( $self, $c ) = @_;
+
+    unless ( $c->user->obj->is_admin ) {
+        $c->res->code(405);
+        $c->res->body('Not allowed');
+        $c->detach;
+    }
+}
+
 =head1 logout
 
 =cut

@@ -3,7 +3,11 @@
 [% html.menu.domains    = 1 -%]
 <h2>Aliases for domain [% domain.domain %]</h2>
 <div class="box aliases">
-    <h2>Aliases <a href="[% c.uri_for( '/domain', domain.domain 'alias/create' ) %]" class="create" title="Add alias">+</a></h2>
+    <h2>
+        search
+        <a href="[% c.uri_for( '/domain', domain.domain 'alias/create' ) %]" class="create" title="Add alias">+</a>
+        <input type="text" id="search"/>
+    </h2>
     <h3>
         <input type="checkbox" class="toggle" id="alias_username" />
         <span class="user">Username</span>
@@ -28,3 +32,26 @@
         <a href="[% c.uri_for('/domain', domain.domain ,'alias/delete') %]" class="alias_username_action any">Delete</a>
     </p>
 </div>
+<script>
+  $(document).ready( function(){
+    $('#search').change( function () {
+        var query = $(this).val();
+        var re = new RegExp( query, 'i' );
+
+        $('.box li').each( function(){
+            content = $(this).html();
+            if ( content.match(re) ) { $(this).show() } 
+            else                     { $(this).hide() }
+        });
+        
+    }).keyup( function (e){ 
+        if ( e.keyCode == 27 ) { $(this).val(null) }
+        $(this).change();
+    }).css({
+        display: 'inline-block',
+        fontSize: '10px',
+        padding: '1px',
+        marginLeft: '5px'
+    }).focus();
+  });
+</script>
