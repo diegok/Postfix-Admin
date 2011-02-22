@@ -8,11 +8,12 @@ all_from 'lib/postadmin.pm';
 requires 'Catalyst::Runtime' => '5.80018';
 requires 'Catalyst::Plugin::ConfigLoader';
 requires 'Catalyst::Plugin::Static::Simple';
+requires 'Catalyst::Plugin::Unicode::Encoding';
 requires 'Catalyst::Action::RenderView';
 requires 'Catalyst::Plugin::Session';
 requires 'Catalyst::Plugin::Session::Store::FastMmap';
 requires 'Catalyst::Plugin::Session::State::Cookie';
-requires ' Catalyst::Authentication::Store::DBIx::Class';
+requires 'Catalyst::Authentication::Store::DBIx::Class';
 
 requires 'Catalyst::View::TT';
 
