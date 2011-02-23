@@ -137,7 +137,7 @@ sub store_column {
             # cleanup old dir tree: delete empty parents.
             $old_maildir = $old_maildir->parent while $old_maildir->parent->remove();
         }
-        else { #create
+        elsif ( ! $old_maildir ) { #create
             $new_maildir = $self->root_dir->subdir( $new_maildir );
             if ( $new_maildir->mkpath( 0, 0700 ) ) {
                 for my $dir ( qw/ new cur tmp / ) {
@@ -229,7 +229,7 @@ sub is_admin {
         $val = $admins->find($self->_username);
     }
 
-    return $val;
+    return defined $val ? 1 : 0;
 }
 
 sub activate   { $_[0]->active(1); $_[0]->log->{action}='Activate mailbox'; $_[0]->update(); };

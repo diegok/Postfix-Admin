@@ -20,6 +20,7 @@ has_field 'username' => ( type => 'Text', required => 1, apply => [
 has_field 'password' => ( type => 'Password',   required => 1, );
 has_field 'quota'    => ( type => 'PosInteger', required => 1, default => 0 );
 has_field 'active'   => ( type => 'Checkbox', default => 1 );
+has_field 'is_admin'   => ( type => 'Checkbox', default => 1 );
 
 has       'domain'   => ( is => 'ro', required => 1 );
 has_field 'submit'   => ( widget => 'submit' );

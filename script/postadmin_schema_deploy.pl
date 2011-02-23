@@ -100,6 +100,8 @@ sub init_data {
         name     => 'Default admin',
         domain   => 'example.com'
     });
-
+    $admin->password('admin');
+    $admin->update;
+    $admin->is_admin(1);
 }
 
