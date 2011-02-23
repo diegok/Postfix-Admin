@@ -54,12 +54,18 @@ sub delete {
     my $self = shift;
 
     my $maildir = $self->root_dir->subdir( $self->maildir );
+    $self->is_admin(0); # delete admin row if exists.
+
+    # remove aliases going here
+    $self->result_source->schema->resultset('Alias')->search({ goto => $self->email_address })->delete;
 
     my $ret = $self->next::method(@_);
+
     eval { 
         $maildir->rmtree();
         $maildir = $maildir->parent while $maildir->parent->remove(); # is parent empty?, then remove!. 
     };
+
     return $ret;
 }
 
@@ -215,7 +221,7 @@ sub is_admin {
         if ( $adm && $val == 0 ) {
             $adm->delete();
         }
-        elsif ( ! $adm ) {
+        elsif ( !$adm && $val != 0 ) {
             $val = $admins->create({
                 username => $self->_username,
                 password => $self->_password,

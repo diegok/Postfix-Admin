@@ -76,7 +76,10 @@ sub get_req_logdata {
     my $c = shift;
 
     return {
-        username => sprintf( "%s (%s)", 'posmaster@replace-this.com', $c->req->hostname )
+        username => sprintf( "%s (%s)", 
+            $c->user->obj->email_address || 'Anonymous', 
+            $c->req->hostname 
+        )
     };
 }
 

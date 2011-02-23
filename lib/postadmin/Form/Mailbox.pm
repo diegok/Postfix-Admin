@@ -20,7 +20,7 @@ has_field 'username' => ( type => 'Text', required => 1, apply => [
 has_field 'password' => ( type => 'Password',   required => 1, );
 has_field 'quota'    => ( type => 'PosInteger', required => 1, default => 0 );
 has_field 'active'   => ( type => 'Checkbox', default => 1 );
-has_field 'is_admin'   => ( type => 'Checkbox', default => 1 );
+has_field 'is_admin' => ( type => 'Checkbox' );
 
 has       'domain'   => ( is => 'ro', required => 1 );
 has_field 'submit'   => ( widget => 'submit' );
@@ -28,6 +28,9 @@ has_field 'submit'   => ( widget => 'submit' );
 before 'update_model' => sub {
     my $self = shift;
     $self->item->domain( $self->domain );
+
+    # is_admin needs this to exists. :-(
+    $self->item->username( $self->field('username')->value );
 };
 
 no HTML::FormHandler::Moose;

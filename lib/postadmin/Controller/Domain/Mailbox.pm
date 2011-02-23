@@ -74,7 +74,7 @@ sub create : PathPart( 'mailbox/create' ) Chained( '/domain/element_chain' ) Arg
     my ( $self, $c ) = @_;
     my $domain = $c->stash->{domain};
     my $form = postadmin::Form::Mailbox->new( domain => $domain->domain );
-    my $mailbox = $c->model('Postfix::Mailbox')->new_result({});
+    my $mailbox = $c->model('Postfix::Mailbox')->new_result({ quota => 0, active => 1 });
 
     if ( $form->process( item => $mailbox, params => $c->req->params, log => $c->get_req_logdata ) ) {
         $c->add_feedback( info  => 'Mailbox ' . $mailbox->email_address . ' created' );
@@ -157,7 +157,7 @@ sub multi_action_redispatch : PathPart( 'mailbox' ) Chained( '/domain/element_ch
     if ( exists $self->allow_multi->{$action} ) {
         for my $username ( $c->req->param('mailbox_username') ) {
             $username .= '@' . $domain->domain;
-            if ( $c->stash->{mailbox} = $c->model('Postfix::Mailbox')->search( username => $username )->first ) {
+            if ( $c->stash->{mailbox} = $c->model('Postfix::Mailbox')->search({ username => $username })->first ) {
                 $c->forward( $self->allow_multi->{$action} );
             }
             else {
