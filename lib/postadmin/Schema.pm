@@ -6,6 +6,8 @@ use base 'DBIx::Class::Schema';
 
 our $VERSION = '0.01';
 
+__PACKAGE__->mk_classdata( Mailbox => {} );
+
 __PACKAGE__->load_namespaces();
 __PACKAGE__->load_components( qw/Schema::Versioned/ );
 

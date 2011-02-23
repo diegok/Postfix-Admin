@@ -5,11 +5,15 @@ use base 'Catalyst::Model::DBIC::Schema';
 
 __PACKAGE__->config(
     schema_class => 'postadmin::Schema',
-    
+    traits       => 'SchemaProxy',
     connect_info => {
         dsn => 'dbi:mysql:postfix',
         user => 'root',
         password => '',
+    },
+    Mailbox      => {
+        root    => '/var/vmail',
+        pattern => '[domain]/[user]/Mailbox'
     }
 );
 
