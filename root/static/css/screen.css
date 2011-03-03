@@ -44,6 +44,28 @@ div#header h1 a {
     text-decoration:none;
 }
 
+div#header ul { 
+    float: right; 
+    margin-top:2px; 
+} 
+div#header ul li { 
+    display:inline-block; 
+} 
+ 
+div#header ul li.logout a { 
+    background:#888; 
+    padding:4px; 
+    border-radius:2px; 
+    -moz-border-radius:2px; 
+    -webkit-border-radius:2px; 
+    margin-left:5px; 
+    text-decoration:none; 
+    color:#fff; 
+} 
+div#header ul li.logout a:hover { 
+    background:#FF0084; 
+}
+
 div#subheader {
     background: #D7D7BB;
     color:#49535B;
