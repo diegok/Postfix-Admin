@@ -13,8 +13,8 @@ requires 'Catalyst::Action::RenderView';
 requires 'Catalyst::Plugin::Session';
 requires 'Catalyst::Plugin::Session::Store::FastMmap';
 requires 'Catalyst::Plugin::Session::State::Cookie';
+requires 'Catalyst::Plugin::Authentication';
 requires 'Catalyst::Authentication::Store::DBIx::Class';
-
 requires 'Catalyst::View::TT';
 
 requires 'parent';
